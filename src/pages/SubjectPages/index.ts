@@ -1,1 +1,1 @@
-export * from './SubjectPages'
+export * from './SubjectPages';

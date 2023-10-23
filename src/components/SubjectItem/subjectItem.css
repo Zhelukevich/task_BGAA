@@ -1,0 +1,21 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-f1);
+  border-radius: 3px;
+  padding: 10px;
+  box-shadow: 1px 0px 12px -4px rgba(34, 60, 80, 0.2);
+  background-color: var(--color-white);
+}
+
+.hgroup {
+  background-color: var(--color-f2);
+  padding: 10px;
+}
+
+.title {
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-f1);
+  font-weight: 700;
+}

@@ -1,0 +1,25 @@
+.subjectList {
+  padding: 2rem 0;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: auto;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 992px) {
+  .subjectList {
+    padding: 1rem 0;
+  }
+
+  .list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+}

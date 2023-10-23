@@ -1,8 +1,17 @@
 :root {
+  --color-f1: #aaaaaa;
+  --color-f2: rgb(226, 240, 255);
+  --color-f3: rgb(9, 47, 88);
+  --color-f4: rgb(240, 245, 252);
+  --color-f5: rgb(0, 138, 5);
+  --color-white: #ffff;
+  --color-text-f1: #001844;
 }
 
 body {
   font-family: 'Arial', Helvetica, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
+  color: var(--color-text-f1);
+  background-color: var(--color-f4);
 }

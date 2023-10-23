@@ -1,0 +1,13 @@
+.btn {
+  padding: 10px;
+  border-radius: 3px;
+  color: var(--color-white);
+}
+
+.blue {
+  background-color: var(--color-f3);
+}
+
+.green {
+  background-color: var(--color-f5);
+}

@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+import { SubjectDataType } from '../../../types/subject';
+
 const urlApi = 'https://bgaa.by/test';
 
 export const fetchSubject = createAsyncThunk('subject/fetchSubject', async () => {
@@ -11,13 +13,16 @@ export const fetchSubject = createAsyncThunk('subject/fetchSubject', async () =>
 
 
 interface SubjectState {
-  subject: object,
+  subject: SubjectDataType,
   loading: boolean,
   error: string | undefined
 }
 
 const initialState: SubjectState = {
-  subject: {},
+  subject: {
+    data: [],
+    teachers: [],
+  },
   loading: false,
   error: '',
 };

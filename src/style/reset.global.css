@@ -57,3 +57,16 @@ img {
   content-visibility: auto;
   object-fit: cover;
 }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+table,
+th,
+td {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
