@@ -13,7 +13,6 @@ import style from './subjectList.css';
 
 export function SubjectList() {
   const subjectList = useAppSelector(state => state.apiSubject.subject);
-
   return (
     <section className={style.subjectList}>
       <ul className={style.list}>

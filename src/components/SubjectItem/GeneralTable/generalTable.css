@@ -9,6 +9,11 @@
   font-size: 12px;
 }
 
+.table td:not(:last-child),
+.table th:not(:last-child) {
+  padding-right: 10px;
+}
+
 .table td {
   font-weight: 400;
 }

@@ -1,6 +1,5 @@
 .table {
   width: 100%;
-  /* height: 100%; */
   height: -webkit-fill-available;
 }
 
@@ -8,7 +7,11 @@
   border-bottom: 2px solid var(--color-f3);
 }
 
-.table tr:nth-child(2n) {
+.thead tr {
+  background-color: var(--color-white) !important;
+}
+
+.table tr:nth-child(2n + 1) {
   background-color: var(--color-f4);
 }
 
@@ -38,10 +41,13 @@
 }
 
 .thBtn {
+  position: relative;
+}
+
+.thBtn div {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
 }
 
 .btn {
@@ -55,4 +61,14 @@
   width: 100%;
   height: 100%;
   inset: 0;
+}
+
+.tdSort {
+  display: flex;
+  align-items: center;
+}
+
+.select {
+  width: 100%;
+  margin-right: 3px;
 }

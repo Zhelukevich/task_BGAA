@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+import { RootState } from '@store/store';
+
 import { SubjectDataType } from '../../../types/subject';
 
 const urlApi = 'https://bgaa.by/test';
@@ -30,7 +32,57 @@ const initialState: SubjectState = {
 const apiSubjectSlice = createSlice({
   name: 'ApiSubject',
   initialState,
-  reducers: {},
+  reducers: {
+    updateAdditionalInfo: (state, action) => {
+      const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
+
+      if (dataItem) {
+        dataItem.additionalInfo = action.payload.additionalInfo;
+      }
+    },
+    updateLaboratoryTeacher: (state, action) => {
+      const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
+      if (dataItem) {
+        dataItem.podgroups[0].laboratoryTeacher = action.payload.laboratoryTeacher;
+      }
+    },
+
+    updateLectureTeacher: (state, action) => {
+      const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
+      if (dataItem) {
+        dataItem.podgroups[0].lectureTeacher = action.payload.lectureTeacher;
+      }
+    },
+
+    updatePracticeTeacher: (state, action) => {
+      const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
+      if (dataItem) {
+        dataItem.podgroups[0].practiceTeacher = action.payload.practiceTeacher;
+      }
+    },
+
+    updateSeminarTeacher: (state, action) => {
+      const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
+      if (dataItem) {
+        dataItem.podgroups[0].seminarTeacher = action.payload.seminarTeacher;
+      }
+    },
+
+    updateExamTeacher: (state, action) => {
+      const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
+      if (dataItem) {
+        dataItem.podgroups[0].examTeacher = action.payload.examTeacher;
+      }
+    },
+
+    updateOffsetTeacher: (state, action) => {
+      const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
+      if (dataItem) {
+        dataItem.podgroups[0].offsetTeacher = action.payload.offsetTeacher;
+      }
+    },
+  },
+
   extraReducers: (builder) => {
     builder.addCase(fetchSubject.pending, state => {
       state.loading = true;
@@ -46,6 +98,18 @@ const apiSubjectSlice = createSlice({
     });
   },
 });
+
+export const {
+  updateAdditionalInfo,
+  updateLaboratoryTeacher,
+  updateLectureTeacher,
+  updatePracticeTeacher,
+  updateSeminarTeacher,
+  updateExamTeacher,
+  updateOffsetTeacher,
+} = apiSubjectSlice.actions;
+
+export const apiSubject = (state: RootState) => state.apiSubject;
 
 export default apiSubjectSlice.reducer;
 

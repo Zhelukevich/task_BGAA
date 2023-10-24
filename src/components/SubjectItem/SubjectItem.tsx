@@ -10,8 +10,6 @@ interface ISubjectItemProps {
   data: SubjectType;
 };
 
-
-
 export function SubjectItem({ data }: ISubjectItemProps) {
   return (
     <li className={style.item}>

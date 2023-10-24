@@ -19,8 +19,18 @@ export interface SubjectType {
   additionalInfo: string;
   countPodgroups: string;
   uniqueId: string;
-  podgroups: string[]
+  podgroups: PodGroup[];
 }
+export interface PodGroup {
+  countStudents: string;
+  laboratoryTeacher: string;
+  lectureTeacher: string;
+  practiceTeacher: string;
+  seminarTeacher: string;
+  examTeacher: string;
+  offsetTeacher: string;
+}
+
 
 export interface TeachersType {
   id: string;

@@ -13,6 +13,12 @@ export function GeneralTable({ data }: IGeneralTableProps) {
   return (
     <>
       <table className={style.table}>
+        <colgroup>
+          <col width="30%" />
+          <col width="15%" />
+          <col width="30%" />
+          <col width="15%" />
+        </colgroup>
         <tbody>
           <tr>
             <th>Группа</th>

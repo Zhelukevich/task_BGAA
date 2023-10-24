@@ -1,35 +1,52 @@
+import React, { useEffect, useMemo, useState } from 'react';
+import Select, { PropsValue } from 'react-select';
 import { useAppSelector } from '@hooks/ReduxToolkit-hooks';
-import React, { useEffect, useState } from 'react';
-import Select from 'react-select';
 
+import { TypeSelect } from '../MainTable';
 
-type SelectType = {
-  value: string,
-  label: string,
+interface ISelectTeacherProps {
+  className?: string;
+  isDisabled: boolean;
+  name?: string;
+  value: PropsValue<object> | undefined;
+  defaultValue: { value: string, label: string };
+  onChange: (e: TypeSelect) => void;
 }
 
 
-export function SelectTeacher() {
+export const SelectTeacher = React.memo(function SelectTeacher({
+  className,
+  onChange,
+  name,
+  value,
+  defaultValue,
+  isDisabled = false,
+}: ISelectTeacherProps) {
   const subjectList = useAppSelector(state => state.apiSubject.subject);
-
-  const [teachers, setTeachers] = useState<SelectType[]>([
-    { value: 'Вакансия', label: 'Вакансия' },
-  ]);
+  const [selectedOption, setSelectedOption] = useState<PropsValue<object> | undefined>(null);
 
   useEffect(() => {
-    const newTeachers = subjectList.teachers.map(subject => ({
-      value: subject.id,
-      label: subject.name,
-    }));
-
-    setTeachers([...teachers, ...newTeachers]);
-  }, [subjectList]);
+    setSelectedOption(value);
+  }, [value]);
+  const teachers = useMemo(() => {
+    if (subjectList.teachers) {
+      return subjectList.teachers.map(subject => ({
+        value: subject.id,
+        label: subject.name,
+      }));
+    }
+    return [];
+  }, [subjectList.teachers]);
 
   return (
     <Select
-      defaultValue={teachers[0]}
-      isDisabled={false}
+      value={selectedOption}
+      onChange={onChange}
+      className={className}
+      defaultValue={defaultValue}
+      isDisabled={isDisabled}
       options={teachers}
+      name={name}
     />
   );
-}
+});
