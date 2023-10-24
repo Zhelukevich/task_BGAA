@@ -1,6 +1,6 @@
 const path = require('path');
 
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -46,7 +46,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'js/[name].[contenthash].js',
-    publicPath: '/',
+    publicPath: IS_DEV ? '/' : './',
     assetModuleFilename: 'assets/[hash][ext]',
   },
   module: {
@@ -109,9 +109,9 @@ module.exports = {
       template: path.resolve(__dirname, 'public/index.html'),
     }),
     new CssMinimizerPlugin(),
-    new CopyWebpackPlugin({
-      patterns: [{ from: 'public/favicons', to: 'favicons' }],
-    }),
+    // new CopyWebpackPlugin({
+    //   patterns: [{ from: 'public/favicons', to: 'favicons' }],
+    // }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash].css',
     }),

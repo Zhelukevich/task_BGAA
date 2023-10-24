@@ -53,7 +53,7 @@ const apiSubjectSlice = createSlice({
     updateLaboratoryTeacher: (state, action) => {
       const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
       if (dataItem) {
-        dataItem.podgroups[0].laboratoryTeacher = action.payload;
+        dataItem.podgroups[0].laboratoryTeacher = action.payload.laboratoryTeacher;
       }
     },
 
@@ -88,7 +88,7 @@ const apiSubjectSlice = createSlice({
     updateOffsetTeacher: (state, action) => {
       const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
       if (dataItem) {
-        dataItem.podgroups[0].offsetTeacher = action.payload;
+        dataItem.podgroups[0].offsetTeacher = action.payload.offsetTeacher;
       }
     },
   },

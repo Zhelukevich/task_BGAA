@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Icon } from '@components/Icon';
 import { MyButton } from '@UI/MyButton';
 import { useAppDispatch } from '@hooks/ReduxToolkit-hooks';
-import { updateExamTeacher, updateLaboratoryTeacher, updateOffsetTeacher, updatePracticeTeacher, updateSeminarTeacher } from '@store/slice/apiSubjectSlice';
+import { updateExamTeacher, updateLaboratoryTeacher, updateLectureTeacher, updateOffsetTeacher, updatePracticeTeacher, updateSeminarTeacher } from '@store/slice/apiSubjectSlice';
 
 import { SubjectType } from '../../../../types/subject';
 
@@ -20,16 +20,54 @@ export interface TypeSelect {
   label: string;
 }
 
-export function MainTable({ data }: IMainTableProps) {
-  // const dispatch = useAppDispatch();
-  const [defaultValue] = useState({ value: 'Вакансия', label: 'Вакансия' });
-  const [selectLectures, setSelectLectures] = useState<TypeSelect | null>(defaultValue);
-  const [selectLaboratory, setSelectLaboratory] = useState<TypeSelect | null>(defaultValue);
-  const [selectPractic, setSelectPractic] = useState<TypeSelect | null>(defaultValue);
-  const [selectSeminar, setSelectSeminar] = useState<TypeSelect | null>(defaultValue);
-  const [selectOffset, setSelectOffset] = useState<TypeSelect | null>(defaultValue);
-  const [selectExam, setSelectExam] = useState<TypeSelect | null>(defaultValue);
+export const MainTable = React.memo(function MainTable({ data }: IMainTableProps) {
+  const dispatch = useAppDispatch();
+  const [defaultValue] = useState({ value: '', label: 'Вакансия' });
+  const [selectLectures, setSelectLectures] = useState<TypeSelect>(defaultValue);
+  const [selectLaboratory, setSelectLaboratory] = useState<TypeSelect>(defaultValue);
+  const [selectPractic, setSelectPractic] = useState<TypeSelect>(defaultValue);
+  const [selectSeminar, setSelectSeminar] = useState<TypeSelect>(defaultValue);
+  const [selectOffset, setSelectOffset] = useState<TypeSelect>(defaultValue);
+  const [selectExam, setSelectExam] = useState<TypeSelect>(defaultValue);
 
+  useEffect(() => {
+    if (data.lecturesHours !== '0') {
+      dispatch(updateLectureTeacher({ uniqueId: data.uniqueId, lectureTeacher: selectLectures.value }));
+    } else {
+      dispatch(updateLectureTeacher({ uniqueId: data.uniqueId, lectureTeacher: '' }));
+    }
+
+    if (data.laboratoryHours !== '0') {
+      dispatch(updateLaboratoryTeacher({ uniqueId: data.uniqueId, laboratoryTeacher: selectLaboratory.value }));
+    } else {
+      dispatch(updateLaboratoryTeacher({ uniqueId: data.uniqueId, laboratoryTeacher: '' }));
+    }
+
+    if (data.practicHours !== '0') {
+      dispatch(updatePracticeTeacher({ uniqueId: data.uniqueId, practiceTeacher: selectPractic.value }));
+    } else {
+      dispatch(updatePracticeTeacher({ uniqueId: data.uniqueId, practiceTeacher: '' }));
+    }
+
+    if (data.seminarHours !== '0') {
+      dispatch(updateSeminarTeacher({ uniqueId: data.uniqueId, seminarTeacher: selectSeminar.value }));
+    } else {
+      dispatch(updateSeminarTeacher({ uniqueId: data.uniqueId, seminarTeacher: '' }));
+    }
+
+    if (data.exam === true) {
+      dispatch(updateExamTeacher({ uniqueId: data.uniqueId, examTeacher: selectExam.value }));
+    } else {
+      dispatch(updateExamTeacher({ uniqueId: data.uniqueId, examTeacher: '' }));
+    }
+
+    if (data.offset === true) {
+      dispatch(updateOffsetTeacher({ uniqueId: data.uniqueId, offsetTeacher: selectOffset.value }));
+    } else {
+      dispatch(updateOffsetTeacher({ uniqueId: data.uniqueId, offsetTeacher: '' }));
+    }
+
+  }, [dispatch, selectLectures, selectLaboratory, selectPractic, selectSeminar, selectOffset, selectExam, data.uniqueId, data.lecturesHours, data.laboratoryHours, data.practicHours, data.seminarHours, data.offset, data.exam]);
 
   const handlerSortDown = () => {
     setSelectLectures(selectLectures);
@@ -40,54 +78,36 @@ export function MainTable({ data }: IMainTableProps) {
     setSelectExam(selectLectures);
   };
 
-  const handlerSelectLectures = (selectedOption: TypeSelect | null) => {
-    setSelectLectures(selectedOption);
-  };
-
-  const handlerSelectLaboratory = (selectedOption: TypeSelect | null) => {
-    setSelectLaboratory(selectedOption);
-    // const updatedData = {
-    //   uniqueId: data.uniqueId,
-    //   laboratoryTeacher: e.value,
-    // };
-    // dispatch(updateLaboratoryTeacher(e.value));
-  };
-
-  const handlerSelectPractic = (selectedOption: TypeSelect | null) => {
-    setSelectPractic(selectedOption);
-    // const updatedData = {
-    //   uniqueId: data.uniqueId,
-    //   practiceTeacher: e.value,
-    // };
-    // dispatch(updatePracticeTeacher(e.value));
-  };
-
-  const handlerSelectSeminar = (selectedOption: TypeSelect | null) => {
-    setSelectSeminar(selectedOption);
-    // const updatedData = {
-    //   uniqueId: data.uniqueId,
-    //   seminarTeacher: e.value,
-    // };
-    // dispatch(updateSeminarTeacher(e.value));
-  };
-
-  const handlerSelectOffset = (selectedOption: TypeSelect | null) => {
-    setSelectOffset(selectedOption);
-    // const updatedData = {
-    //   uniqueId: data.uniqueId,
-    //   offsetTeacher: e.value,
-    // };
-    // dispatch(updateOffsetTeacher(e.value));
-  };
-
-  const handlerSelectExam = (selectedOption: TypeSelect | null) => {
-    setSelectExam(selectedOption);
-    // const updatedData = {
-    //   uniqueId: data.uniqueId,
-    //   examTeacher: e.value,
-    // };
-    // dispatch(updateExamTeacher(e.value));
-  };
+  const handleSelectTeacher = useCallback((selectedOption, type: string) => {
+    switch (type) {
+      case 'lectures':
+        setSelectLectures(selectedOption);
+        dispatch(updateLectureTeacher({ uniqueId: data.uniqueId, lecturesTeacher: selectedOption.value }));
+        break;
+      case 'laboratory':
+        setSelectLaboratory(selectedOption);
+        dispatch(updateLaboratoryTeacher({ uniqueId: data.uniqueId, laboratoryTeacher: selectedOption.value }));
+        break;
+      case 'practic':
+        setSelectPractic(selectedOption);
+        dispatch(updatePracticeTeacher({ uniqueId: data.uniqueId, practiceTeacher: selectedOption.value }));
+        break;
+      case 'seminar':
+        setSelectSeminar(selectedOption);
+        dispatch(updateSeminarTeacher({ uniqueId: data.uniqueId, seminarTeacher: selectedOption.value }));
+        break;
+      case 'offset':
+        setSelectOffset(selectedOption);
+        dispatch(updateOffsetTeacher({ uniqueId: data.uniqueId, offsetTeacher: selectedOption.value }));
+        break;
+      case 'exam':
+        setSelectExam(selectedOption);
+        dispatch(updateExamTeacher({ uniqueId: data.uniqueId, examTeacher: selectedOption.value }));
+        break;
+      default:
+        break;
+    }
+  }, [data.uniqueId, dispatch, setSelectLectures, setSelectLaboratory, setSelectPractic, setSelectSeminar, setSelectOffset, setSelectExam]);
 
   return (
     <table className={style.table}>
@@ -95,7 +115,7 @@ export function MainTable({ data }: IMainTableProps) {
         <col width="25%" />
         <col width="5%" />
       </colgroup>
-      <colgroup span={2} style={{ width: '25%' }} />
+      <colgroup span={1} style={{ width: '25%' }} />
       <thead className={style.thead}>
         <tr>
           <th>Занятие</th>
@@ -116,7 +136,6 @@ export function MainTable({ data }: IMainTableProps) {
                 </div>
               </th>
           }
-          <th>Подгруппа 1</th>
         </tr>
       </thead>
       <tbody>
@@ -129,7 +148,7 @@ export function MainTable({ data }: IMainTableProps) {
                 className={style.select}
                 isDisabled={data.lecturesHours === '0' ? true : false}
                 defaultValue={defaultValue}
-                onChange={handlerSelectLectures}
+                onChange={(e) => handleSelectTeacher(e, 'lectures')}
                 value={data.lecturesHours === '0' ? defaultValue : selectLectures}
               />
               <MyButton
@@ -146,7 +165,7 @@ export function MainTable({ data }: IMainTableProps) {
             <SelectTeacher
               isDisabled={data.laboratoryHours === '0' ? true : false}
               defaultValue={defaultValue}
-              onChange={handlerSelectLaboratory}
+              onChange={(e) => handleSelectTeacher(e, 'laboratory')}
               value={data.laboratoryHours === '0' ? defaultValue : selectLaboratory}
             />
           </td>
@@ -158,7 +177,7 @@ export function MainTable({ data }: IMainTableProps) {
             <SelectTeacher
               isDisabled={data.practicHours === '0' ? true : false}
               defaultValue={defaultValue}
-              onChange={handlerSelectPractic}
+              onChange={(e) => handleSelectTeacher(e, 'practic')}
               value={data.practicHours === '0' ? defaultValue : selectPractic}
             />
           </td>
@@ -170,7 +189,7 @@ export function MainTable({ data }: IMainTableProps) {
             <SelectTeacher
               isDisabled={data.seminarHours === '0' ? true : false}
               defaultValue={defaultValue}
-              onChange={handlerSelectSeminar}
+              onChange={(e) => handleSelectTeacher(e, 'seminar')}
               value={data.seminarHours === '0' ? defaultValue : selectSeminar}
             />
           </td>
@@ -184,7 +203,7 @@ export function MainTable({ data }: IMainTableProps) {
                 <SelectTeacher
                   isDisabled={false}
                   defaultValue={defaultValue}
-                  onChange={handlerSelectOffset}
+                  onChange={(e) => handleSelectTeacher(e, 'offset')}
                   value={selectOffset}
                 />
               </td>
@@ -201,7 +220,7 @@ export function MainTable({ data }: IMainTableProps) {
                 <SelectTeacher
                   isDisabled={false}
                   defaultValue={defaultValue}
-                  onChange={handlerSelectExam}
+                  onChange={(e) => handleSelectTeacher(e, 'exam')}
                   value={selectExam}
                 />
               </td>
@@ -209,12 +228,6 @@ export function MainTable({ data }: IMainTableProps) {
             :
             <></>
         }
-        <tr>
-          <td>Количество человек</td>
-          <td></td>
-          <td>0</td>
-          <td>0</td>
-        </tr>
         <tr className={style.note}>
           <td className={style.note_title}>
             Примечание
@@ -233,4 +246,4 @@ export function MainTable({ data }: IMainTableProps) {
     </table >
 
   );
-}
+});

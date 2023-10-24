@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Select, { PropsValue, SingleValue, ActionMeta } from 'react-select';
 import { useAppSelector } from '@hooks/ReduxToolkit-hooks';
 
-
 interface ISelectTeacherProps {
   className?: string;
   isDisabled: boolean;
@@ -44,6 +43,7 @@ export const SelectTeacher = React.memo(function SelectTeacher({
       className={className}
       defaultValue={defaultValue}
       isDisabled={isDisabled}
+      isSearchable={false}
       options={teachers}
       name={name}
     />
