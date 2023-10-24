@@ -1,33 +1,60 @@
 import React from 'react';
-
 import { SubjectItem } from '@components/SubjectItem';
-
 import { EColor, MyButton } from '@UI/MyButton/MyButton';
+import { useAppDispatch, useAppSelector } from '@hooks/ReduxToolkit-hooks';
 
-import { useAppSelector } from '@hooks/ReduxToolkit-hooks';
+import { fetchSentSubject } from '@store/slice/SendDataSubjectSlice';
 
+import { Loader } from '@components/Loader';
 
 import style from './subjectList.css';
 
-
-
 export function SubjectList() {
-  const subjectList = useAppSelector(state => state.apiSubject.subject);
+  const { subject, error, loading } = useAppSelector(state => state.apiSubject);
+  const sendError = useAppSelector(state => state.sendDataSubject.error);
+  const sendLoading = useAppSelector(state => state.sendDataSubject.loading);
+  const dispatch = useAppDispatch();
+
+  const handleSendClick = () => {
+    dispatch(fetchSentSubject(subject));
+  };
   return (
+
     <section className={style.subjectList}>
-      <ul className={style.list}>
-        {subjectList.data.map((item) => (
-          <SubjectItem
-            key={item.uniqueId}
-            data={item} />
-        ))}
-      </ul>
-      <MyButton
-        color={EColor.f2}
-        label="Сохранить"
-        onClick={() => console.log('11')}
-        ariaLabel="Сохранить таблицу" />
+      {
+        loading ? (
+          <Loader />
+        ) : error ? (
+          <div>Ошибка: {error}</div>
+        ) : (
+          <>
+            <ul className={style.list}>
+              {subject.data.map((item) => (
+                <SubjectItem
+                  key={item.uniqueId}
+                  data={item} />
+              ))}
+            </ul>
+            {
+              sendLoading ? (
+                <Loader />
+              ) : sendError ? (
+                <div>Ошибка: {sendError}</div>
+              ) : (
+                <MyButton
+                  color={EColor.f2}
+                  label="Сохранить"
+                  onClick={handleSendClick}
+                  ariaLabel="Сохранить таблицу" />
+              )
+            }
+          </>
+        )
+      }
+
+
     </section>
   );
 }
+
 

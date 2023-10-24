@@ -7,7 +7,7 @@ import { SubjectDataType } from '../../../types/subject';
 
 const urlApi = 'https://bgaa.by/test';
 
-export const fetchSubject = createAsyncThunk('subject/fetchSubject', async () => {
+export const fetchSubject = createAsyncThunk('GET_Subject/fetchSubject', async () => {
   const response = await axios.get(urlApi);
   return response.data;
 
@@ -30,7 +30,7 @@ const initialState: SubjectState = {
 };
 
 const apiSubjectSlice = createSlice({
-  name: 'ApiSubject',
+  name: 'Subject',
   initialState,
   reducers: {
     updateAdditionalInfo: (state, action) => {
@@ -43,7 +43,7 @@ const apiSubjectSlice = createSlice({
     updateLaboratoryTeacher: (state, action) => {
       const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
       if (dataItem) {
-        dataItem.podgroups[0].laboratoryTeacher = action.payload.laboratoryTeacher;
+        dataItem.podgroups[0].laboratoryTeacher = action.payload;
       }
     },
 
@@ -78,7 +78,7 @@ const apiSubjectSlice = createSlice({
     updateOffsetTeacher: (state, action) => {
       const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
       if (dataItem) {
-        dataItem.podgroups[0].offsetTeacher = action.payload.offsetTeacher;
+        dataItem.podgroups[0].offsetTeacher = action.payload;
       }
     },
   },

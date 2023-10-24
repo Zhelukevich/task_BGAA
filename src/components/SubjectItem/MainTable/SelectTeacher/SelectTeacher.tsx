@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import Select, { PropsValue } from 'react-select';
+import Select, { PropsValue, SingleValue, ActionMeta } from 'react-select';
 import { useAppSelector } from '@hooks/ReduxToolkit-hooks';
 
-import { TypeSelect } from '../MainTable';
 
 interface ISelectTeacherProps {
   className?: string;
@@ -10,7 +9,7 @@ interface ISelectTeacherProps {
   name?: string;
   value: PropsValue<object> | undefined;
   defaultValue: { value: string, label: string };
-  onChange: (e: TypeSelect) => void;
+  onChange: (newValue: SingleValue<object>, actionMeta: ActionMeta<object>) => void;
 }
 
 
