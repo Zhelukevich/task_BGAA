@@ -7,9 +7,19 @@ import { SubjectDataType } from '../../../types/subject';
 
 const urlApi = 'https://bgaa.by/test';
 
-export const fetchSubject = createAsyncThunk('GET_Subject/fetchSubject', async () => {
-  const response = await axios.get(urlApi);
-  return response.data;
+export const fetchSubject = createAsyncThunk('GET_Subject/fetchSubject', async (_, { rejectWithValue }) => {
+  try {
+    const response = await axios.get(urlApi);
+
+    if (response.status !== 200 && 201) {
+      throw new Error('ServerError!');
+    }
+    const subjectData = response.data;
+    return subjectData;
+
+  } catch (error) {
+    return rejectWithValue(error);
+  }
 
 });
 

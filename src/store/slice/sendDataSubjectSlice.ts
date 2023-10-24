@@ -6,10 +6,11 @@ import { RootState } from '@store/store';
 import { SubjectDataType } from '../../../types/subject';
 
 const urlApi = 'https://bgaa.by/test_result';
-// PUT PATCH-лучше?
+
+
 const sendDataToServer = async (data: SubjectDataType) => {
   try {
-    const response = await axios.post(urlApi, data, {
+    const response = await axios.put(urlApi, data, {
       headers: {
         'Content-Type': 'application/json',
       },

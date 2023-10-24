@@ -4,6 +4,8 @@
   "description": "Сards with information on subjects",
   "main": "index.js",
   "scripts": {
+    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build",
     "dev": "cross-env NODE_ENV=development webpack-dev-server",
     "build:dev": "cross-env NODE_ENV=development webpack --config webpack.config.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js"
@@ -17,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/Zhelukevich/task_BGAA/issues"
   },
-  "homepage": "https://github.com/Zhelukevich/task_BGAA#readme",
+  "homepage": "https://zhelukevich.github.io/task_BGAA/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
     "react": "^18.2.0",
@@ -52,6 +54,7 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "gh-pages": "^6.0.0",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
     "postcss": "^8.4.31",

@@ -2,9 +2,7 @@ import React from 'react';
 import { SubjectItem } from '@components/SubjectItem';
 import { EColor, MyButton } from '@UI/MyButton/MyButton';
 import { useAppDispatch, useAppSelector } from '@hooks/ReduxToolkit-hooks';
-
 import { fetchSentSubject } from '@store/slice/SendDataSubjectSlice';
-
 import { Loader } from '@components/Loader';
 
 import style from './subjectList.css';
@@ -25,7 +23,7 @@ export function SubjectList() {
         loading ? (
           <Loader />
         ) : error ? (
-          <div>Ошибка: {error}</div>
+          <div style={{ color: 'red' }}>Ошибка: {error}</div>
         ) : (
           <>
             <ul className={style.list}>
@@ -39,7 +37,7 @@ export function SubjectList() {
               sendLoading ? (
                 <Loader />
               ) : sendError ? (
-                <div>Ошибка: {sendError}</div>
+                <div style={{ color: 'red' }}>Ошибка: {sendError}</div>
               ) : (
                 <MyButton
                   color={EColor.f2}
