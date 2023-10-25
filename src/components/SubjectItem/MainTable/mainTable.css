@@ -63,12 +63,15 @@
   inset: 0;
 }
 
-.tdSort {
+.wrapperSelect {
   display: flex;
+  width: 100%;
+  height: 100%;
+  gap: 4px;
   align-items: center;
 }
 
 .select {
   width: 100%;
-  margin-right: 3px;
+  height: 100%;
 }

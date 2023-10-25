@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Select, { PropsValue, SingleValue, ActionMeta } from 'react-select';
 import { useAppSelector } from '@hooks/ReduxToolkit-hooks';
 
-interface ISelectTeacherProps {
+interface ISelectItemProps {
   className?: string;
   isDisabled: boolean;
   name?: string;
@@ -12,14 +12,14 @@ interface ISelectTeacherProps {
 }
 
 
-export const SelectTeacher = React.memo(function SelectTeacher({
+export const SelectItem = React.memo(function SelectItem({
   className,
   onChange,
   name,
   value,
   defaultValue,
   isDisabled = false,
-}: ISelectTeacherProps) {
+}: ISelectItemProps) {
   const subjectList = useAppSelector(state => state.apiSubject.subject);
   const [selectedOption, setSelectedOption] = useState<PropsValue<object> | undefined>(null);
 

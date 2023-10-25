@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { RootState } from '@store/store';
@@ -43,52 +43,81 @@ const apiSubjectSlice = createSlice({
   name: 'Subject',
   initialState,
   reducers: {
-    updateAdditionalInfo: (state, action) => {
+    updateAdditionalInfo: (state, action: PayloadAction<{ uniqueId: string; additionalInfo: string }>) => {
       const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
 
       if (dataItem) {
         dataItem.additionalInfo = action.payload.additionalInfo;
       }
     },
-    updateLaboratoryTeacher: (state, action) => {
-      const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
+
+    updateLectureTeacher: (state, action: PayloadAction<{ uniqueId: string; lectureTeacher: string; index: number }>) => {
+      const { uniqueId, lectureTeacher, index } = action.payload;
+      const dataItem = state.subject.data.find(item => item.uniqueId === uniqueId);
       if (dataItem) {
-        dataItem.podgroups[0].laboratoryTeacher = action.payload.laboratoryTeacher;
+        if (dataItem.podgroups && dataItem.podgroups[index]) {
+          dataItem.podgroups[index].lectureTeacher = lectureTeacher;
+        }
       }
     },
 
-    updateLectureTeacher: (state, action) => {
-      const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
+    updateLaboratoryTeacher: (state, action: PayloadAction<{ uniqueId: string; laboratoryTeacher: string; index: number }>) => {
+      const { uniqueId, laboratoryTeacher, index } = action.payload;
+      const dataItem = state.subject.data.find(item => item.uniqueId === uniqueId);
       if (dataItem) {
-        dataItem.podgroups[0].lectureTeacher = action.payload.lectureTeacher;
+        if (dataItem.podgroups && dataItem.podgroups[index]) {
+          dataItem.podgroups[index].laboratoryTeacher = laboratoryTeacher;
+        }
       }
     },
 
-    updatePracticeTeacher: (state, action) => {
-      const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
+    updatePracticeTeacher: (state, action: PayloadAction<{ uniqueId: string; practiceTeacher: string; index: number }>) => {
+      const { uniqueId, practiceTeacher, index } = action.payload;
+      const dataItem = state.subject.data.find(item => item.uniqueId === uniqueId);
       if (dataItem) {
-        dataItem.podgroups[0].practiceTeacher = action.payload.practiceTeacher;
+        if (dataItem.podgroups && dataItem.podgroups[index]) {
+          dataItem.podgroups[index].practiceTeacher = practiceTeacher;
+        }
       }
     },
 
-    updateSeminarTeacher: (state, action) => {
-      const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
+    updateSeminarTeacher: (state, action: PayloadAction<{ uniqueId: string; seminarTeacher: string; index: number }>) => {
+      const { uniqueId, seminarTeacher, index } = action.payload;
+      const dataItem = state.subject.data.find(item => item.uniqueId === uniqueId);
       if (dataItem) {
-        dataItem.podgroups[0].seminarTeacher = action.payload.seminarTeacher;
+        if (dataItem.podgroups && dataItem.podgroups[index]) {
+          dataItem.podgroups[index].seminarTeacher = seminarTeacher;
+        }
       }
     },
 
-    updateExamTeacher: (state, action) => {
-      const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
+    updateExamTeacher: (state, action: PayloadAction<{ uniqueId: string; examTeacher: string; index: number }>) => {
+      const { uniqueId, examTeacher, index } = action.payload;
+      const dataItem = state.subject.data.find(item => item.uniqueId === uniqueId);
       if (dataItem) {
-        dataItem.podgroups[0].examTeacher = action.payload.examTeacher;
+        if (dataItem.podgroups && dataItem.podgroups[index]) {
+          dataItem.podgroups[index].examTeacher = examTeacher;
+        }
       }
     },
 
-    updateOffsetTeacher: (state, action) => {
-      const dataItem = state.subject.data.find(item => item.uniqueId === action.payload.uniqueId);
+    updateOffsetTeacher: (state, action: PayloadAction<{ uniqueId: string; offsetTeacher: string; index: number }>) => {
+      const { uniqueId, offsetTeacher, index } = action.payload;
+      const dataItem = state.subject.data.find(item => item.uniqueId === uniqueId);
       if (dataItem) {
-        dataItem.podgroups[0].offsetTeacher = action.payload.offsetTeacher;
+        if (dataItem.podgroups && dataItem.podgroups[index]) {
+          dataItem.podgroups[index].offsetTeacher = offsetTeacher;
+        }
+      }
+    },
+
+    updateNumberOfPeople: (state, action: PayloadAction<{ uniqueId: string; countStudents: string; index: number }>) => {
+      const { uniqueId, countStudents, index } = action.payload;
+      const dataItem = state.subject.data.find(item => item.uniqueId === uniqueId);
+      if (dataItem) {
+        if (dataItem.podgroups && dataItem.podgroups[index]) {
+          dataItem.podgroups[index].countStudents = countStudents;
+        }
       }
     },
   },
@@ -104,7 +133,7 @@ const apiSubjectSlice = createSlice({
     });
     builder.addCase(fetchSubject.rejected, (state, actions) => {
       state.loading = false;
-      state.error = actions.error.message;
+      state.error = actions.error.message as string;
     });
   },
 });
@@ -117,6 +146,7 @@ export const {
   updateSeminarTeacher,
   updateExamTeacher,
   updateOffsetTeacher,
+  updateNumberOfPeople,
 } = apiSubjectSlice.actions;
 
 export const apiSubject = (state: RootState) => state.apiSubject;

@@ -17,7 +17,7 @@ interface ButtonProps {
   ariaLabel: string;
 }
 
-export function MyButton(props: ButtonProps) {
+export const MyButton = React.memo(function MyButton(props: ButtonProps) {
   const {
     label,
     color = EColor.f1,
@@ -42,4 +42,4 @@ export function MyButton(props: ButtonProps) {
       {label}
     </button>
   );
-}
+}); 
