@@ -4,9 +4,14 @@
   max-height: 100px;
   padding: 5px;
   resize: vertical;
-  border-radius: 2px;
+  border-radius: 3px;
   border: 1px solid var(--color-f1);
   font-family: inherit;
   font-weight: 400;
   font-size: 12px;
+}
+
+.textarea:focus {
+  outline: 2px solid #001844;
+  outline-offset: -1px;
 }

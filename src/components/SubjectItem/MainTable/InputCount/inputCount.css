@@ -5,4 +5,10 @@
   color: var(--color-text-f1);
   font-size: 12px;
   padding: 5px;
+  border-radius: 3px;
+}
+
+.input:focus {
+  outline: 2px solid #001844;
+  outline-offset: -1px;
 }

@@ -38,6 +38,7 @@ export const SelectItem = React.memo(function SelectItem({
 
   return (
     <Select
+      placeholder="Вакансия"
       value={selectedOption}
       onChange={onChange}
       className={className}
@@ -46,6 +47,23 @@ export const SelectItem = React.memo(function SelectItem({
       isSearchable={false}
       options={teachers}
       name={name}
+      styles={{
+        container: (baseStyles, state) => ({
+          ...baseStyles,
+          fontSize: '12px',
+          color: '#001844',
+          valueContainer: '#001844',
+        }),
+      }}
+      theme={(theme) => ({
+        ...theme,
+        borderRadius: 3,
+        colors: {
+          ...theme.colors,
+          primary25: 'rgb(226, 240, 255)',
+          primary: 'rgb(9, 47, 88)',
+        },
+      })}
     />
   );
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Plus, SortDown } from './icons';
+import { Plus, SortDown, Delete } from './icons';
 
 interface IconProps {
   width: number;
@@ -15,6 +15,8 @@ export function Icon(props: IconProps) {
       return <Plus {...props} />;
     case 'SortDown':
       return <SortDown {...props} />;
+    case 'Delete':
+      return <Delete {...props} />;
     default:
       return <></>;
   }

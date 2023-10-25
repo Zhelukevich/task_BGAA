@@ -236,8 +236,7 @@ export const MainTable = React.memo(function MainTable({ data }: IMainTableProps
                       onClick={handlerOpenSubgroup}
                       className={style.btn}
                     >
-                      +
-                      {/* <Icon width={15} height={15} name={'Plus'} /> */}
+                      <Icon width={15} height={15} name={'Plus'} />
                     </button>
                   </div>
                 </th>
@@ -253,8 +252,7 @@ export const MainTable = React.memo(function MainTable({ data }: IMainTableProps
                   onClick={handlerCloseSubgroup}
                   className={style.btn}
                 >
-                  -
-                  {/* <Icon width={15} height={15} name={'Plus'} /> */}
+                  <Icon width={15} height={15} name={'Delete'} />
                 </button>
               </div>
             </th>
@@ -276,7 +274,8 @@ export const MainTable = React.memo(function MainTable({ data }: IMainTableProps
                 value={data.lecturesHours === '0' ? defaultValue : selectLectures}
               />
               <MyButton
-                label={<Icon width={15} height={15} name={'SortDown'} />}
+                className={style.sortDownDtm}
+                label={<Icon width={20} height={20} name={'SortDown'} />}
                 onClick={() => handlerSortDown()}
                 ariaLabel="Назначить преподавателя для всех полей" />
             </div>
@@ -292,7 +291,8 @@ export const MainTable = React.memo(function MainTable({ data }: IMainTableProps
                   value={data.lecturesHours === '0' ? defaultValue : selectLectures_1}
                 />
                 <MyButton
-                  label={<Icon width={15} height={15} name={'SortDown'} />}
+                  className={style.sortDownDtm}
+                  label={<Icon width={20} height={20} name={'SortDown'} />}
                   onClick={() => handlerSortDown_1()}
                   ariaLabel="Назначить преподавателя для всех полей" />
               </div>
